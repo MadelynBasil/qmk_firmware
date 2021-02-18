@@ -18,6 +18,7 @@
 
 enum layers {
     BASE = 0,
+    SIMP,
     QWER,
     GAMB,
     GAMX,
@@ -27,6 +28,25 @@ enum layers {
     FUNL,
     NSL,
     NSSL,
+    LOCK,
+};
+
+enum custom_keycodes {
+    TODEFAL = SAFE_RANGE,
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case TODEFAL:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+        } else {
+            // when keycode QMKBEST is released
+            layer_move(default_layer_state); // Switch to default layer
+        }
+        break;
+    }
+    return true;
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -38,17 +58,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |LCtrl/BS|   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |   O  | LCtrl/;|
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |  Tab   |   Z  |   X  |   C  |   D  |   V  | GAME |QWERTY|  |      |      |   K  |   H  | ,  < | . >  |  / ? |  - _   |
+ * |  Tab   |   Z  |   X  |   C  |   D  |   V  | LAlt |      |  |      | RAlt |   K  |   H  | ,  < | . >  |  / ? |  - _   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | LAlt | MEDR |LShift| NAVR | MOUR |  | NSSL |  NSL |LShift| FUNL | LAlt |
- *                        |      | LGUI | Esc  |Space |Enter |  | Enter| BSpc |  Del | LGUI |      |
+ *                        | LOCK | MEDR |LShift| NAVR | MOUR |  | NSSL |  NSL |LShift| FUNL | LOCK |
+ *                        |Volume| LGUI | Esc  |Space |Enter |  | Enter| BSpc |  Del | LGUI |Scroll|
  *                        `----------------------------------'  `----------------------------------'
  */
     [BASE] = LAYOUT(
-      LT(NSL, KC_ESC), KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
-      LCTL_T(KC_BSPC), KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    LCTL_T(KC_SCLN),
-      KC_TAB,          KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,  TO(GAMB), TO(QWER), _______, _______, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
-      KC_LALT, LT(MEDR, KC_LGUI), LSFT_T(KC_ESC), LT(NAVR, KC_SPC), LT(MOUR, KC_ENT), LT(NSSL, KC_ENT), LT(NSL, KC_BSPC), LSFT_T(KC_DEL), LT(FUNL, KC_LGUI), KC_LALT
+      LT(NSL, KC_ESC), KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
+      LCTL_T(KC_BSPC), KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    LCTL_T(KC_SCLN),
+      KC_TAB,          KC_Z,    KC_X,    KC_C,    KC_D,    KC_V, KC_LALT, _______,     _______, KC_RALT, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
+      TG(LOCK), LT(MEDR, KC_LGUI), LSFT_T(KC_ESC), LT(NAVR, KC_SPC), LT(MOUR, KC_ENT), LT(NSSL, KC_ENT), LT(NSL, KC_BSPC), LSFT_T(KC_DEL), LT(FUNL, KC_LGUI), TG(LOCK)
+    ),
+/*
+ * Base Layer: Colemak (simple)
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |  ESC   |   Q  |   W  |   F  |   P  |   B  |                              |   J  |   L  |   U  |   Y  |  ' " |  \ |   |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * | BSpc   |   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |   O  |  ; :   |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |  Tab   |   Z  |   X  |   C  |   D  |   V  | LAlt | NAVR |  |      |      |   K  |   H  | ,  < | . >  |  / ? |  - _   |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        | LOCK | LGUI |LShift|Space |Enter |  | NSSL |  NSL |LShift| FUNL | LOCK |
+ *                        |Volume|      |      |      |      |  | Enter| BSpc |  Del | LGUI |Scroll|
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [SIMP] = LAYOUT(
+      KC_ESC,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
+      KC_BSPC, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_SCLN,
+      KC_TAB,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,  MO(NAVR), MO(MOUR), KC_LCTL, KC_LALT, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
+                                  TG(LOCK), KC_LGUI, KC_LSFT, KC_SPC, KC_ENT, LT(NSSL, KC_ENT), LT(NSL, KC_BSPC), LSFT_T(KC_DEL), LT(FUNL, KC_LGUI), TG(LOCK)
     ),
 /*
  * Alternate Layer: Qwerty
@@ -60,15 +100,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |  Tab   |   Z  |   X  |   C  |   V  |   B  |      | BASE |  |      | - _  |  / ? |   B  |  N   |   M  |  , < |  . >   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | LAlt | MEDR |LShift| NAVR | MOUR |  | NSSL |  NSL |LShift| FUNL | LAlt |
- *                        |      | LGUI | Esc  |Space |Enter |  | Enter| BSpc |  Del | LGUI |      |
+ *                        | LOCK | LGUI |LShift|Space |Enter |  | NSSL |  NSL |LShift| FUNL | LOCK |
+ *                        |Volume|      |      |      |      |  | Enter| BSpc |  Del | LGUI |Scroll|
  *                        `----------------------------------'  `----------------------------------'
  */
     [QWER] = LAYOUT(
-      KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_BSLS, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-      KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                        KC_QUOT, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,
-      KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,  TO(NAVR), TO(BASE),  _______, KC_MINS, KC_SLSH, KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,
-                                   KC_LALT, KC_LGUI, KC_LSFT, KC_SPC, KC_ENT, LT(NSSL, KC_ENT), LT(NSL, KC_BSPC), LSFT_T(KC_DEL), LT(FUNL, KC_LGUI), KC_LALT
+      KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                       KC_BSLS, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+      KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                       KC_QUOT, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,
+      KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,  KC_LALT, _______,  _______, KC_MINS, KC_SLSH, KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,
+                                TG(LOCK), KC_LGUI, KC_LSFT, KC_SPC, KC_ENT, LT(NSSL, KC_ENT), LT(NSL, KC_BSPC), LSFT_T(KC_DEL), LT(FUNL, KC_LGUI), TG(LOCK)
     ),
 /*
  * Base game Layer: GAMB
@@ -80,15 +120,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |   M    |   Z  |   X  |   C  |   V  |   B  |   N  | BASE |  |      |      |      |      |      |      |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | GUI  | LAlt |LShift|Space |Enter |  |      |      |      |      |      |
- *                        |      |      |      |      | GAMX |  |      |      |      |      |      |
+ *                        | LOCK | LAlt |LShift|Space |Enter |  |      |      |      |      |      |
+ *                        |Volume|      |      |      | GAMX |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [GAMB] = LAYOUT(
       KC_ESC,    KC_T,   KC_Q,    KC_W,    KC_E,    KC_R,                                   _______, _______, _______, _______, _______, _______,
       KC_TAB, KC_LCTL,   KC_A,    KC_S,    KC_D,    KC_F,                                   _______, _______, _______, _______, _______, _______,
-      KC_M,      KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_N, TO(BASE), _______, _______, _______, _______, _______, _______, _______, _______,
-                     KC_LGUI, KC_LALT, KC_LSFT, KC_SPC, LT(GAMX, KC_ENT), _______, _______, _______, _______, _______
+      KC_M,      KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_N, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                     TO(LOCK), KC_LALT, KC_LSFT, KC_SPC, LT(GAMX, KC_ENT), _______, _______, _______, _______, TG(LOCK)
     ),
 /*
  * Base game Layer: GAMX
@@ -145,6 +185,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_COLN, KC_DLR,  KC_PERC, KC_CIRC, KC_PLUS,                                     _______, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, _______,
       _______, KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_PIPE, _______, _______, _______, _______, _______, _______, _______, KC_ALGR, _______, _______,
                                  _______, _______, KC_LPRN, KC_RPRN, KC_UNDS, _______, _______, _______, _______, _______
+    ),
+    [LOCK] = LAYOUT(
+      KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+      KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+      KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+                                TODEFAL, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, TODEFAL
     ),
 
 /*
@@ -297,10 +343,30 @@ static void render_status(void) {
     oled_write_P(PSTR("Kyria rev1.2\n"), false);
 
     // Host Keyboard Layer Status
+    oled_write_P(PSTR("Default: "), false);
+    switch(default_layer_state) {
+        case BASE:
+            oled_write_P(PSTR("Base\n"), false);
+            break;
+        case SIMP:
+            oled_write_P(PSTR("Simple\n"), false);
+            break;
+        case QWER:
+            oled_write_P(PSTR("Qwerty\n"), false);
+            break;
+        case GAMB:
+            oled_write_P(PSTR("Gaming\n"), false);
+            break;
+        default:
+            oled_write_P(PSTR("Undefined\n"), false);
+    }
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
         case BASE:
             oled_write_P(PSTR("Base\n"), false);
+            break;
+        case SIMP:
+            oled_write_P(PSTR("Simple\n"), false);
             break;
         case QWER:
             oled_write_P(PSTR("Qwerty\n"), false);
@@ -329,6 +395,9 @@ static void render_status(void) {
         case NSSL:
             oled_write_P(PSTR("Shifted Nums\n"), false);
             break;
+        case LOCK:
+            oled_write_P(PSTR("Locked\n"), false);
+            break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);
     }
@@ -351,20 +420,34 @@ void oled_task_user(void) {
 
 #ifdef ENCODER_ENABLE
 void encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-        // Volume control
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
+    if (get_highest_layer(layer_state) != LOCK) {
+        if (index == 0) {
+            // Volume control
+            if (clockwise) {
+                tap_code(KC_VOLD);
+            } else {
+                tap_code(KC_VOLU);
+            }
+        }
+        else if (index == 1) {
+            // Page up/Page down
+            if (clockwise) {
+                tap_code(KC_PGUP);
+            } else {
+                tap_code(KC_PGDN);
+            }
         }
     }
-    else if (index == 1) {
-        // Page up/Page down
-        if (clockwise) {
-            tap_code(KC_PGUP);
-        } else {
-            tap_code(KC_PGDN);
+    else {
+        if (index == 1) {
+            // Layer switching
+            if (clockwise) {
+                //scroll down base layer list
+                default_layer_set((default_layer_state-1) % 4);
+            } else {
+                //scroll up base layer list
+                default_layer_set((default_layer_state+1) % 4);
+            }
         }
     }
 }
