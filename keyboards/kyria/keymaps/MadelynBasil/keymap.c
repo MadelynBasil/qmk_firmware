@@ -28,6 +28,7 @@ enum layers {
     FUNL,
     NSL,
     NSSL,
+    ACNT,
     LOCK,
 };
 
@@ -35,18 +36,34 @@ enum custom_keycodes {
     TODEFAL = SAFE_RANGE,
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-    case TODEFAL:
-        if (record->event.pressed) {
-            // when keycode QMKBEST is pressed
-        } else {
-            // when keycode QMKBEST is released
-            layer_move(default_layer_state); // Switch to default layer
-        }
-        break;
-    }
-    return true;
+enum unicode_names {
+    BANG,
+    IRONY,
+    SNEK,
+    LCNT,
+    UCNT,
+    INOS,
+    INEX,
+};
+
+const uint32_t PROGMEM unicode_map[] = {
+    [LNT]   = 0x00D1,  // Ñ
+    [UNT]   = 0x00F1,  // ñ
+    [UAA]   = 0x00C1,  // Á
+    [LAA]   = 0x00E1,  // á
+    [UAE]   = 0x00C9,  // É
+    [LAE]   = 0x00E9,  // é
+    [UAI]   = 0x00CD,  // Í
+    [LAI]   = 0x00ED,  // í
+    [UAO]   = 0x00D3,  // Ó
+    [LAO]   = 0x00F3,  // ó
+    [UAU]   = 0x00DA,  // Ú
+    [LAU]   = 0x00FA,  // ú
+    [INQS]  = 0x00BF,  // ¿
+    [INEX]  = 0x00A1,  // ¡
+    [BANG]  = 0x203D,  // ‽
+    [IRONY] = 0x2E2E,  // ⸮
+    [SNEK]  = 0x1F40D, // 🐍
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -186,6 +203,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_PIPE, _______, _______, _______, _______, _______, _______, _______, KC_ALGR, _______, _______,
                                  _______, _______, KC_LPRN, KC_RPRN, KC_UNDS, _______, _______, _______, _______, _______
     ),
+    [ACNT] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______,XP(LAA,UAA), _______, _______, _______, _______,                                 _______, XP(LNT,UNT),XP(LAE,UAE),XP(LAI,UAI),XP(LAO,UAO), _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, X(BANG), _______,
+                                 _______, _______, KC_LPRN, KC_RPRN, KC_UNDS, _______, _______, _______, _______, _______
+    ),
     [LOCK] = LAYOUT(
       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
@@ -243,10 +266,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //     ),
 };
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case TODEFAL:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+        } else {
+            // when keycode QMKBEST is released
+            layer_move(default_layer_state); // Switch to default layer
+        }
+        break;
+    }
+    return true;
+};
+
 void keyboard_post_init_user(void) {
 	#ifdef RGBLIGHT_ENABLE
 	rgblight_enable_noeeprom();
-	rgblight_sethsv_noeeprom(130, 255, 150);
+	rgblight_sethsv_noeeprom(150, 200, 230);
 	//rgblight_sethsv_range(255.3, 18.4, 100, 0, 10);
 	//rgblight_sethsv_range(180, 26.5, 93.3, 10, 20);
 	#endif
@@ -397,6 +434,9 @@ static void render_status(void) {
             break;
         case LOCK:
             oled_write_P(PSTR("Locked\n"), false);
+            break;
+        case ACNT:
+            oled_write_P(PSTR("Accented Chars"));
             break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);

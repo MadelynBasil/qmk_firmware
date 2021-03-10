@@ -3,7 +3,7 @@ RGBLIGHT_ENABLE = yes      	# Enable keyboard RGB underglow
 ENCODER_ENABLE = yes
 MOUSEKEY_ENABLE = yes	   	# Mouse keys
 EXTRAKEY_ENABLE = yes 	   	# Audio control and System control
-UNICODE_ENABLE = yes		# More character support!
+UNICODEMAP_ENABLE = yes		# More character support!
 
 # Combo stuff
 FORCE_NKRO = yes
