@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |LCtrl/BS|   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |   O  | LCtrl/;|
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |  Tab   |   Z  |   X  |   C  |   D  |   V  | LAlt |      |  |      | RAlt |   K  |   H  | ,  < | . >  |  / ? |  - _   |
+ * |  Tab   |   Z  |   X  |   C  |   D  |   V  | LAlt | LGUI |  | RGUI | RAlt |   K  |   H  | ,  < | . >  |  / ? |  - _   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | LOCK | MEDR |LShift| NAVR | MOUR |  | NSSL |  NSL |LShift| FUNL | LOCK |
  *                        |Volume| LGUI | Esc  |Space |Enter |  | Enter| BSpc |  Del | LGUI |Scroll|
@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT(
       LT(NSL, KC_ESC), KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
       LCTL_T(KC_BSPC), KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    LCTL_T(KC_SCLN),
-      KC_TAB,          KC_Z,    KC_X,    KC_C,    KC_D,    KC_V, KC_LALT, _______,     _______, KC_RALT, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
+      KC_TAB,          KC_Z,    KC_X,    KC_C,    KC_D,    KC_V, KC_LALT, KC_LGUI,     KC_RGUI, KC_RALT, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
       TG(LOCK), LT(MEDR, KC_LGUI), LSFT_T(KC_ESC), LT(NAVR, KC_SPC), LT(MOUR, KC_ENT), LT(NSSL, KC_ENT), LT(NSL, KC_BSPC), LSFT_T(KC_DEL), LT(FUNL, KC_LGUI), TG(LOCK)
     ),
 /*
@@ -76,39 +76,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  ESC   |   Q  |   W  |   F  |   P  |   B  |                              |   J  |   L  |   U  |   Y  |  ' " |  \ |   |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * | BSpc   |   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |   O  |  ; :   |
+ * | LCtrl  |   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |   O  |  ; :   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |  Tab   |   Z  |   X  |   C  |   D  |   V  | LAlt | NAVR |  |      |      |   K  |   H  | ,  < | . >  |  / ? |  - _   |
+ * |  Tab   |   Z  |   X  |   C  |   D  |   V  | LAlt | NAVR |  |  NSL | RAlt |   K  |   H  | ,  < | . >  |  / ? |  - _   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | LOCK | LGUI |LShift|Space |Enter |  | NSSL |  NSL |LShift| FUNL | LOCK |
- *                        |Volume|      |      |      |      |  | Enter| BSpc |  Del | LGUI |Scroll|
+ *                        | LOCK | LGUI |LShift|Space |Enter |  | Enter| BSpc |  Del | LGUI | LOCK |
+ *                        |Volume|      |      |      |      |  |      |      |      |      |Scroll|
  *                        `----------------------------------'  `----------------------------------'
  */
     [SIMP] = LAYOUT(
-      KC_ESC,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
-      KC_BSPC, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_SCLN,
-      KC_TAB,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,  MO(NAVR), MO(MOUR), KC_LCTL, KC_LALT, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
-                                  TG(LOCK), KC_LGUI, KC_LSFT, KC_SPC, KC_ENT, LT(NSSL, KC_ENT), LT(NSL, KC_BSPC), LSFT_T(KC_DEL), LT(FUNL, KC_LGUI), TG(LOCK)
+      KC_ESC,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                       KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
+      KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                       KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_SCLN,
+      KC_TAB,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,  KC_LALT, MO(NAVR), MO(NSL), KC_RALT, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
+                                 TG(LOCK), KC_LGUI, KC_LSFT, KC_SPC, KC_ENT, KC_ENT, KC_BSPC, KC_DEL, KC_LGUI, TG(LOCK)
     ),
 /*
  * Alternate Layer: Qwerty
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |NSL/ESC |   Q  |   W  |   E  |   R  |   T  |                              |  \ | |   Y  |   U  |   I  |   O  |   P    |
+ * |  ESC   |   Q  |   W  |   E  |   R  |   T  |                              |  \ | |   Y  |   U  |   I  |   O  |   P    |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |LCtrl/BS|   A  |   S  |   D  |   F  |   G  |                              |  ' " |   H  |   J  |   K  |   L  |  ; :   |
+ * | LCtrl  |   A  |   S  |   D  |   F  |   G  |                              |  ' " |   H  |   J  |   K  |   L  |  ; :   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |  Tab   |   Z  |   X  |   C  |   V  |   B  |      | BASE |  |      | - _  |  / ? |   B  |  N   |   M  |  , < |  . >   |
+ * |  Tab   |   Z  |   X  |   C  |   V  |   B  | LALT | NAVR |  |  NSL | - _  |  / ? |   B  |  N   |   M  |  , < |  . >   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | LOCK | LGUI |LShift|Space |Enter |  | NSSL |  NSL |LShift| FUNL | LOCK |
- *                        |Volume|      |      |      |      |  | Enter| BSpc |  Del | LGUI |Scroll|
+ *                        | LOCK | LGUI |LShift|Space |Enter |  | Enter| BSpc |  Del | LGUI | LOCK |
+ *                        |Volume|      |      |      |      |  |      |      |      |      |Scroll|
  *                        `----------------------------------'  `----------------------------------'
  */
     [QWER] = LAYOUT(
       KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                       KC_BSLS, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-      KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                       KC_QUOT, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,
-      KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,  KC_LALT, _______,  _______, KC_MINS, KC_SLSH, KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,
-                                TG(LOCK), KC_LGUI, KC_LSFT, KC_SPC, KC_ENT, LT(NSSL, KC_ENT), LT(NSL, KC_BSPC), LSFT_T(KC_DEL), LT(FUNL, KC_LGUI), TG(LOCK)
+      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                       KC_QUOT, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,
+      KC_TAB,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,  KC_LALT, MO(NAVR), MO(NSL), KC_MINS, KC_SLSH, KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,
+                                 TG(LOCK), KC_LGUI, KC_LSFT, KC_SPC, KC_ENT, KC_ENT, KC_BSPC, KC_DEL, KC_LGUI, TG(LOCK)
     ),
 /*
  * Base game Layer: GAMB
@@ -178,7 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_LBRC, KC_7,    KC_8,    KC_9,    KC_RBRC,                                     _______, _______, _______, _______, KC_RST,  _______,
       _______, KC_SCLN, KC_4,    KC_5,    KC_6,    KC_EQL,                                      _______, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, _______,
       _______, KC_GRV,  KC_1,    KC_2,    KC_3,    KC_BSLS, _______, _______, _______, _______, _______, _______, _______, KC_ALGR, _______, _______,
-                                 _______, _______, KC_DOT,  KC_0,    KC_MINS, _______, _______, _______, _______, _______
+                                 _______, KC_PLUS, KC_MINS, KC_0,    KC_DOT,  _______, _______, _______, _______, _______
     ),
     [NSSL] = LAYOUT(
       _______, KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR,                                     _______, _______, _______, _______, KC_RST,  _______,
@@ -187,8 +187,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, KC_LPRN, KC_RPRN, KC_UNDS, _______, _______, _______, _______, _______
     ),
     [LOCK] = LAYOUT(
-      KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-      KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+      KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+      KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                                    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
                                 TODEFAL, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, TODEFAL
     ),

@@ -1,8 +1,9 @@
-OLED_DRIVER_ENABLE = yes   # Enables the use of OLED displays
-RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
+OLED_DRIVER_ENABLE = yes   	# Enables the use of OLED displays
+RGBLIGHT_ENABLE = yes      	# Enable keyboard RGB underglow
 ENCODER_ENABLE = yes
-MOUSEKEY_ENABLE = yes	   # Mouse keys
-EXTRAKEY_ENABLE = yes 	   # Audio control and System control
+MOUSEKEY_ENABLE = yes	   	# Mouse keys
+EXTRAKEY_ENABLE = yes 	   	# Audio control and System control
+UNICODE_ENABLE = yes		# More character support!
 
 # Combo stuff
 FORCE_NKRO = yes
