@@ -37,13 +37,23 @@ enum custom_keycodes {
 };
 
 enum unicode_names {
+    LNT,
+    UNT,
+    UAA,
+    LAA,
+    UAE,
+    LAE,
+    UAI,
+    LAI,
+    UAO,
+    LAO,
+    UAU,
+    LAU,
+    INQS,
+    INEX,
     BANG,
     IRONY,
     SNEK,
-    LCNT,
-    UCNT,
-    INOS,
-    INEX,
 };
 
 const uint32_t PROGMEM unicode_map[] = {
@@ -71,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base Layer: Colemak
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |NSL/ESC |   Q  |   W  |   F  |   P  |   B  |                              |   J  |   L  |   U  |   Y  |  ' " |  \ |   |
+ * |ACNT/ESC|   Q  |   W  |   F  |   P  |   B  |                              |   J  |   L  |   U  |   Y  |  ' " | ACNT/\ |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |LCtrl/BS|   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |   O  | LCtrl/;|
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -82,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [BASE] = LAYOUT(
-      LT(NSL, KC_ESC), KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, KC_BSLS,
+      LT(ACNT, KC_ESC),KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, LT(ACNT, KC_BSLS),
       LCTL_T(KC_BSPC), KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    LCTL_T(KC_SCLN),
       KC_TAB,          KC_Z,    KC_X,    KC_C,    KC_D,    KC_V, KC_LALT, KC_LGUI,     KC_RGUI, KC_RALT, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
       TG(LOCK), LT(MEDR, KC_LGUI), LSFT_T(KC_ESC), LT(NAVR, KC_SPC), LT(MOUR, KC_ENT), LT(NSSL, KC_ENT), LT(NSL, KC_BSPC), LSFT_T(KC_DEL), LT(FUNL, KC_LGUI), TG(LOCK)
@@ -436,7 +446,7 @@ static void render_status(void) {
             oled_write_P(PSTR("Locked\n"), false);
             break;
         case ACNT:
-            oled_write_P(PSTR("Accented Chars"));
+            oled_write_P(PSTR("Accented Chars\n"), false);
             break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);
