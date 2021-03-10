@@ -74,7 +74,8 @@
 #define COMBO_COUNT 16
 #define COMBO_TERM 50
 
-
+// UNICODE input methods
+#define UNICODE_SELECTED_MODES UC_LNX, UC_WINC
 
 // ~Space saving measures!~
 
