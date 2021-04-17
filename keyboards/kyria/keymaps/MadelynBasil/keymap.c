@@ -280,9 +280,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
     case TODEFAL:
         if (record->event.pressed) {
-            // when keycode QMKBEST is pressed
+            // when keycode TODEFAL is pressed
         } else {
-            // when keycode QMKBEST is released
+            // when keycode TODEFAL is released
             layer_move(default_layer_state); // Switch to default layer
         }
         break;
@@ -293,7 +293,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void keyboard_post_init_user(void) {
 	#ifdef RGBLIGHT_ENABLE
 	rgblight_enable_noeeprom();
-	rgblight_sethsv_noeeprom(150, 200, 230);
+	rgblight_sethsv_noeeprom(150, 255, 230);
 	//rgblight_sethsv_range(255.3, 18.4, 100, 0, 10);
 	//rgblight_sethsv_range(180, 26.5, 93.3, 10, 20);
 	#endif
