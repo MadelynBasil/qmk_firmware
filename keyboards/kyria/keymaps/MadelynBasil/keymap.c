@@ -489,15 +489,13 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
     else {
-        if (index == 1) {
-            // Layer switching
-            if (clockwise) {
-                //scroll down base layer list
-                default_layer_set((default_layer_state-1) % 4);
-            } else {
-                //scroll up base layer list
-                default_layer_set((default_layer_state+1) % 4);
-            }
+        // Layer switching
+        if (clockwise) {
+            //scroll down base layer list
+            default_layer_set((default_layer_state-1) % 4);
+        } else {
+            //scroll up base layer list
+            default_layer_set((default_layer_state+1) % 4);
         }
     }
 }
