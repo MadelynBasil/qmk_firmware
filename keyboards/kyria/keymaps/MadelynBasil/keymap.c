@@ -57,8 +57,8 @@ enum unicode_names {
 };
 
 const uint32_t PROGMEM unicode_map[] = {
-    [LNT]   = 0x00D1,  // Ñ
-    [UNT]   = 0x00F1,  // ñ
+    [UNT]   = 0x00D1,  // Ñ
+    [LNT]   = 0x00F1,  // ñ
     [UAA]   = 0x00C1,  // Á
     [LAA]   = 0x00E1,  // á
     [UAE]   = 0x00C9,  // É
@@ -85,16 +85,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |LCtrl/BS|   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |   O  | LCtrl/;|
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |  Tab   |   Z  |   X  |   C  |   D  |   V  | LAlt | LGUI |  | RGUI | RAlt |   K  |   H  | ,  < | . >  |  / ? |  - _   |
+ * |  Tab   |   Z  |   X  |   C  |   D  |   V  | LAlt | UFOR |  | UBAK | RAlt |   K  |   H  | ,  < | . >  |  / ? |  - _   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | LOCK | MEDR |LShift| NAVR | MOUR |  | NSSL |  NSL |LShift| FUNL | LOCK |
  *                        |Volume| LGUI | Esc  |Space |Enter |  | Enter| BSpc |  Del | LGUI |Scroll|
  *                        `----------------------------------'  `----------------------------------'
  */
     [BASE] = LAYOUT(
-      LT(ACNT, KC_ESC),KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, LT(ACNT, KC_BSLS),
-      LCTL_T(KC_BSPC), KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    LCTL_T(KC_SCLN),
-      KC_TAB,          KC_Z,    KC_X,    KC_C,    KC_D,    KC_V, KC_LALT, KC_LGUI,     KC_RGUI, KC_RALT, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
+      LT(ACNT, KC_ESC),KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                                              KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT, LT(ACNT, KC_BSLS),
+      LCTL_T(KC_BSPC), KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                                              KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    LCTL_T(KC_SCLN),
+      KC_TAB,          KC_Z,    KC_X,    KC_C,    KC_D,    KC_V, KC_LALT, UNICODE_MODE_FORWARD,UNICODE_MODE_REVERSE, KC_RALT, KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
       TG(LOCK), LT(MEDR, KC_LGUI), LSFT_T(KC_ESC), LT(NAVR, KC_SPC), LT(MOUR, KC_ENT), LT(NSSL, KC_ENT), LT(NSL, KC_BSPC), LSFT_T(KC_DEL), LT(FUNL, KC_LGUI), TG(LOCK)
     ),
 /*
@@ -214,7 +214,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, KC_LPRN, KC_RPRN, KC_UNDS, _______, _______, _______, _______, _______
     ),
     [ACNT] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,                                     _______, _______,XP(LAU,UAU), _______, _______, _______,
       _______,XP(LAA,UAA), _______, _______, _______, _______,                                 _______, XP(LNT,UNT),XP(LAE,UAE),XP(LAI,UAI),XP(LAO,UAO), _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, X(BANG), _______,
                                  _______, _______, KC_LPRN, KC_RPRN, KC_UNDS, _______, _______, _______, _______, _______
@@ -293,7 +293,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void keyboard_post_init_user(void) {
 	#ifdef RGBLIGHT_ENABLE
 	rgblight_enable_noeeprom();
-	rgblight_sethsv_noeeprom(150, 255, 230);
+	rgblight_sethsv_noeeprom(198, 255, 230);
 	//rgblight_sethsv_range(255.3, 18.4, 100, 0, 10);
 	//rgblight_sethsv_range(180, 26.5, 93.3, 10, 20);
 	#endif
@@ -451,6 +451,17 @@ static void render_status(void) {
         default:
             oled_write_P(PSTR("Undefined\n"), false);
     }
+    oled_write_P(PSTR("Unicode: "), false);
+    switch (get_unicode_input_mode()) {
+        case UC_LNX:
+            oled_write_P(PSTR("Linux\n"), false);
+            break;
+        case UC_WINC:
+            oled_write_P(PSTR("Win Compose\n"), false);
+            break;
+        default:
+            oled_write_P(PSTR("Undefined\n"), false);
+    }
 
     // Host Keyboard LED Status
     uint8_t led_usb_state = host_keyboard_leds();
@@ -478,8 +489,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             } else {
                 tap_code(KC_VOLU);
             }
-        }
-        else if (index == 1) {
+        } else if (index == 1) {
             // Page up/Page down
             if (clockwise) {
                 tap_code(KC_PGUP);
@@ -487,8 +497,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(KC_PGDN);
             }
         }
-    }
-    else {
+    } else {
         // Layer switching
         if (clockwise) {
             //scroll down base layer list

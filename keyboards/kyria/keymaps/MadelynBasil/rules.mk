@@ -1,4 +1,4 @@
-OLED_DRIVER_ENABLE = yes   	# Enables the use of OLED displays
+LED_DRIVER_ENABLE = yes   	# Enables the use of OLED displays
 RGBLIGHT_ENABLE = yes      	# Enable keyboard RGB underglow
 ENCODER_ENABLE = yes
 MOUSEKEY_ENABLE = yes	   	# Mouse keys
