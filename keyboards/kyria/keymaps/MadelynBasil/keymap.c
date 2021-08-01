@@ -14,7 +14,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
-#include "keymap_jp.h"
 
 enum layers {
     BASE = 0,
@@ -95,7 +94,7 @@ enum unicode_names {
     KMD,
     PSM,
     FWC,FWP,
-    HLYE,HLSI1
+    HLYE
 };
 
 const uint32_t PROGMEM unicode_map[] = {
@@ -226,7 +225,6 @@ const uint32_t PROGMEM unicode_map[] = {
     [FWC] = 0xFF0C,
     [FWP] = 0xFF0E,
     [HLYE] = 0x1B001,
-    [HLSI1] = 0x1B044
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -307,8 +305,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [TRON] = LAYOUT(
       KC_ESC,  X(HLRA), X(HLRU), X(HLKO), X(HLHA), X(HLSYO),                                                 X(HLKI), X(HLNO), X(HLKU), X(HLA),  X(HLRE),  _______,
       KC_LCTL, X(HLTA), X(HLTO), X(HLKA), X(HLTE), X(HLMO),                                                  X(HLWO), X(HLI),  X(HLU),  X(HLSI), X(HLN),   _______,
-      KC_TAB,  X(HLMA), X(HLRI), X(HLNI), X(HLSA), X(HLNA), KC_LALT, TG(TRON),UNICODE_MODE_FORWARD, JP_KANA, X(HLSU), X(HLTU), X(JCOM), X(JPER), X(HLSTU), _______,
-                                 TG(LOCK),JP_MHEN, MO(LTRN),X(WSPC),   KC_ENT,              KC_ENT, KC_BSPC, MO(RTRN),JP_HENK, TG(LOCK)
+      KC_TAB,  X(HLMA), X(HLRI), X(HLNI), X(HLSA), X(HLNA), KC_LALT, TG(TRON),UNICODE_MODE_FORWARD, _______, X(HLSU), X(HLTU), X(JCOM), X(JPER), X(HLSTU), _______,
+                                TG(LOCK), _______,MO(LTRN), X(WSPC),   KC_ENT,              KC_ENT, KC_BSPC,MO(RTRN), _______,TG(LOCK)
     ),
 /*
  * Base game Layer: GAMB
@@ -696,7 +694,7 @@ void oled_task_user(void) {
 #endif
 
 #ifdef ENCODER_ENABLE
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
     if (get_highest_layer(layer_state) != LOCK) {
         if (index == 0) {
             // Volume control
@@ -723,5 +721,6 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             default_layer_set((default_layer_state+1) % 5);
         }
     }
+   return true;
 }
 #endif
